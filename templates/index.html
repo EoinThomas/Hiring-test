@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+<script type=text/javascript>
+  $(function() {
+    var submit_form = function(e) {
+      $.getJSON($SCRIPT_ROOT + '/_top_airports', {
+        a: $('input[name="a"]').val()
+      }, function(data) {
+        $('#result').text(data.result);
+        $('input[name=a]').focus().select();
+      });
+      return false;
+    };
+
+    $('a#calculate').bind('click', submit_form);
+
+    $('input[type=text]').bind('keydown', function(e) {
+      if (e.keyCode == 13) {
+        submit_form(e);
+      }
+    });
+
+    $('input[name=a]').focus();
+  });
+</script>
+<h1>Top airports</h1>
+<p>
+  <input type=text size=5 name=a> 
+<p>
+  <span id=result>?</span>
+{% endblock %}
